@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "606184650055",
+    "firebase_url": "https://slimeraise-default-rtdb.firebaseio.com",
     "project_id": "slimeraise",
     "storage_bucket": "slimeraise.appspot.com"
   },

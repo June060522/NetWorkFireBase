@@ -35,9 +35,6 @@ public class AuthManager : MonoBehaviour
 
     private string loadLastLogin = "";
     private string loadLastReward = "";
-
-    [SerializeField] GameObject snow;
-    [SerializeField] GameObject rain;
     private void Awake()
     {
         Firebase.FirebaseApp.CheckAndFixDependenciesAsync().ContinueWith(task =>
@@ -172,7 +169,7 @@ public class AuthManager : MonoBehaviour
                     message = "Account does not Exist";
                     break;
             }
-            warningRegisterText.text = message;
+            warningLoginText.text = message;
         }
         else
         {
@@ -244,34 +241,9 @@ public class AuthManager : MonoBehaviour
         }
         else
         {
-            StartCoroutine(Weather());
             DataSnapshot snapshot = DBTask.Result;
             Debug.Log("Load Complete");
             userNameText.text = $"UserName: {snapshot.Value}";
-        }
-    }
-
-    private IEnumerator Weather()
-    {
-        var DBTask = dbref.Child("Weather").GetValueAsync();
-        yield return new WaitUntil(() => DBTask.IsCompleted);
-        if (DBTask.Exception != null)
-        {
-            Debug.LogWarning($"Failed to Save task with {DBTask.Exception}");
-        }
-        else
-        {
-            DataSnapshot snapshot = DBTask.Result;
-            Debug.Log((string)snapshot.Value);
-            switch ((string)snapshot.Value)
-            {
-                case "Rain":
-                    Instantiate(rain);
-                    break;
-                case "Snow":
-                    Instantiate(snow);
-                    break;
-            }
         }
     }
 

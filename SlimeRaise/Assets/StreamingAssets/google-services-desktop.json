@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "606184650055",
+    "firebase_url": "https://slimeraise-default-rtdb.firebaseio.com",
+    "project_id": "slimeraise",
+    "storage_bucket": "slimeraise.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:606184650055:android:46aeb844e4c85019c4c862",
+        "android_client_info": {
+          "package_name": "com.DefaultCompany.SlimeRaise"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDGDELXpQvH5iu1GxDpfPp6-5vXCTG_-88"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

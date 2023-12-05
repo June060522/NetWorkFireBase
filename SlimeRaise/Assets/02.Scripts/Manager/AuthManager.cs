@@ -243,7 +243,7 @@ public class AuthManager : MonoBehaviour
         {
             DataSnapshot snapshot = DBTask.Result;
             Debug.Log("Load Complete");
-            userNameText.text = $"UserName: {snapshot.Value}";
+            userNameText.text = $"{snapshot.Value}";
         }
     }
 

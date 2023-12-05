@@ -29,9 +29,18 @@ public class AuthManager : MonoBehaviour
     public TMP_InputField passwordCheckRegisterField;
     public TMP_Text warningRegisterText;
 
+    [Header("ChangePassword")]
+    public TMP_InputField changePasswordField;
+    public TMP_InputField changeCheckPasswordField;
+
+    [Header("DairyReward")]
+    public GameObject dayRewardBtnParent;
+    public TMP_Text attendance;
+    private int repeat = 0;
 
     public TMP_Text userNameText;
-    public Button dayRewardBtn;
+
+    private string eventText = "";
 
     private string loadLastLogin = "";
     private string loadLastReward = "";
@@ -42,18 +51,14 @@ public class AuthManager : MonoBehaviour
             var dependencyStatus = task.Result;
             if (dependencyStatus == Firebase.DependencyStatus.Available)
             {
-                // Create and hold a reference to your FirebaseApp,
-                // where app is a Firebase.FirebaseApp property of your application class.
                 FirebaseApp app = Firebase.FirebaseApp.DefaultInstance;
                 auth = FirebaseAuth.DefaultInstance;
                 dbref = FirebaseDatabase.DefaultInstance.RootReference;
-                // Set a flag here to indicate whether Firebase is ready to use by your app.
             }
             else
             {
                 UnityEngine.Debug.LogError(System.String.Format(
                   "Could not resolve all Firebase dependencies: {0}", dependencyStatus));
-                // Firebase Unity SDK is not safe to use here.
             }
         });
     }
@@ -180,6 +185,8 @@ public class AuthManager : MonoBehaviour
 
             StartCoroutine(SaveDate());
             StartCoroutine(LoadUsername());
+            StartCoroutine(LoadRepeat());
+            StartCoroutine(LoadEvent());
             FirebaseDatabase.DefaultInstance.GetReference("RewardLogin").ValueChanged += HandleTimeValueChanged;
         }
     }
@@ -200,6 +207,37 @@ public class AuthManager : MonoBehaviour
         else
         {
             Debug.Log("UserName Saved");
+        }
+    }
+
+    private IEnumerator SaveRepeat()
+    {
+        var DBTask = dbref.Child("users").Child(user.UserId).Child("Repeat").SetValueAsync(repeat);
+        yield return new WaitUntil(() => DBTask.IsCompleted);
+        if (DBTask.Exception != null)
+        {
+            Debug.LogWarning($"Failed to Save task with {DBTask.Exception}");
+        }
+        else
+        {
+            attendance.text = $"{repeat}일 째 연속 출석!";
+        }
+    }
+
+    private IEnumerator LoadRepeat()
+    {
+        var DBTask = dbref.Child("users").Child(user.UserId).Child("Repeat").GetValueAsync();
+        yield return new WaitUntil(() => DBTask.IsCompleted);
+        if (DBTask.Exception != null)
+        {
+            Debug.LogWarning($"Failed to Save task with {DBTask.Exception}");
+        }
+        else
+        {
+            DataSnapshot snapshot = DBTask.Result;
+            Debug.Log("Load Complete");
+            if(snapshot.Value != null)
+                repeat = int.Parse($"{snapshot.Value}");
         }
     }
 
@@ -274,22 +312,60 @@ public class AuthManager : MonoBehaviour
         else
         {
             DataSnapshot snapshot = DBTask.Result;
-            Debug.Log("Load Complete");
             loadLastReward = $"{snapshot.Value}";
-            Debug.Log(loadLastLogin);
-            OnInterSect();
+            StartCoroutine(OnInterSect());
         }
     }
 
-    void OnInterSect()
+    bool CheckString()
     {
-        if (loadLastLogin.Substring(0, 12).CompareTo(loadLastReward.Substring(0, 12)) < 0)
-            dayRewardBtn.interactable = true;
+        long a = 0, b = 0;
+        for(int i = 0; i < 13;i++)
+        {
+            a *= 10;
+            b *= 10;
+            a += loadLastLogin[i] - '0';
+            b += loadLastReward[i] - '0';
+        }
+        return a - 2 >= b;
     }
 
-    public void ClickReward() => StartCoroutine(SaveRewardLogin());
-    private IEnumerator SaveRewardLogin()
+    IEnumerator OnInterSect()
     {
+        while (true)
+        {
+            loadLastLogin = DateTime.Now.ToString("yyyyMMddHHmmss");
+            for(int i = 0; i < 28; i++)
+            {
+                dayRewardBtnParent.transform.GetChild(i).GetComponent<Button>().interactable = false;
+            }
+            if (CheckString())
+            {
+                repeat = 0;
+                StartCoroutine(SaveRepeat());
+                dayRewardBtnParent.transform.GetChild(repeat).GetComponent<Button>().interactable = true;
+                attendance.gameObject.SetActive(false);
+            }
+            else if (loadLastLogin.Substring(0, 13).CompareTo(loadLastReward.Substring(0, 13)) > 0)
+            {
+                dayRewardBtnParent.transform.GetChild(repeat).GetComponent<Button>().interactable = true;
+                attendance.gameObject.SetActive(false);
+            }
+            else
+            {
+                attendance.gameObject.SetActive(true);
+            }
+            yield return null;
+        }
+    }
+
+    public void ClickReward(Button _btn) => StartCoroutine(SaveRewardLogin(_btn));
+    private IEnumerator SaveRewardLogin(Button _btn)
+    {
+        repeat++;
+        StartCoroutine(SaveRepeat());
+        loadLastReward = DateTime.Now.ToString("yyyyMMddHHmmss");
+        _btn.interactable = false;
         var DBTask = dbref.Child("users").Child(user.UserId).Child("RewardLogin").SetValueAsync(DateTime.Now.ToString("yyyyMMddHHmmss"));
         yield return new WaitUntil(() => DBTask.IsCompleted);
         if (DBTask.Exception != null)
@@ -298,6 +374,52 @@ public class AuthManager : MonoBehaviour
         }
         else
         {
+        }
+    }
+
+    public void ChangePassword()
+    {
+        if(changeCheckPasswordField.text == changePasswordField.text)
+        {
+            Firebase.Auth.FirebaseUser user = auth.CurrentUser;
+            string newPassword = changePasswordField.text;
+            if (user != null)
+            {
+                user.UpdatePasswordAsync(newPassword).ContinueWith(task => {
+                    if (task.IsCanceled)
+                    {
+                        Debug.LogError("UpdatePasswordAsync was canceled.");
+                        return;
+                    }
+                    if (task.IsFaulted)
+                    {
+                        Debug.LogError("UpdatePasswordAsync encountered an error: " + task.Exception);
+                        return;
+                    }
+                    Debug.Log("Password updated successfully.");
+                });
+            }
+        }
+    }
+
+    IEnumerator LoadEvent()
+    {
+        while (true)
+        {
+            var DBTask = dbref.Child("Ability").GetValueAsync();
+            yield return new WaitUntil(() => DBTask.IsCompleted);
+            if (DBTask.Exception != null)
+            {
+                Debug.LogWarning($"Load task Failed with {DBTask.Exception}");
+            }
+            else
+            {
+                DataSnapshot snapshot = DBTask.Result;
+                if (snapshot != null && snapshot.Value != null)
+                {
+                    eventText = snapshot.Value.ToString();
+                }
+            }
         }
     }
 }

@@ -10,6 +10,8 @@ public class UIManager : Singleton<UIManager>
     public GameObject m_settingUI;
     public GameObject m_friendUI;
     public GameObject m_main;
+    public GameObject m_passwordChange;
+    public GameObject m_dairyReward;
 
     public void OptionBtn()
     {
@@ -61,13 +63,37 @@ public class UIManager : Singleton<UIManager>
 
     public void LoginPanel()
     {
-        m_loginUI.SetActive(true) ;
+        m_loginUI.SetActive(true);
         m_registerUI.SetActive(false);
     }
 
     public void CloseLogin()
     {
         m_loginUI.SetActive(false);
+        m_main.SetActive(true);
+    }
+
+    public void ClosePasswordChange()
+    {
+        m_passwordChange.SetActive(false);
+        m_main.SetActive(true);
+    }
+
+    public void OpenPasswordChange()
+    {
+        m_passwordChange.SetActive(true);
+        m_settingUI.SetActive(false);
+    }
+
+    public void OpenDairy()
+    {
+        m_dairyReward.SetActive(true);
+        m_main.SetActive(false);
+    }
+
+    public void CloseDairy()
+    {
+        m_dairyReward.SetActive(false);
         m_main.SetActive(true);
     }
 }

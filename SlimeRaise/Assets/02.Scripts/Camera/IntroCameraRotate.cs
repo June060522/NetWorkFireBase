@@ -9,7 +9,7 @@ public class IntroCameraRotate : MonoBehaviour
     Transform m_cameraTrm;
     private void Start()
     {
-        i = -41.9f; m_isRotate = true;
+        i = 0f; m_isRotate = true;
         m_cameraTrm = transform;
     }
 
@@ -17,7 +17,7 @@ public class IntroCameraRotate : MonoBehaviour
     {
         if(m_isRotate)
         {
-            i+= 0.001f;
+            i+= 0.007f;
             m_cameraTrm.rotation = Quaternion.Euler(45,i,0);
         }
     }

@@ -1,0 +1,10 @@
+D:\2023Network\2ndSem\SocketClass\chatClientCS202\bin\Debug\chatClientCS202.exe.config
+D:\2023Network\2ndSem\SocketClass\chatClientCS202\bin\Debug\chatClientCS202.exe
+D:\2023Network\2ndSem\SocketClass\chatClientCS202\bin\Debug\chatClientCS202.pdb
+D:\2023Network\2ndSem\SocketClass\chatClientCS202\obj\Debug\chatClientCS202.csprojAssemblyReference.cache
+D:\2023Network\2ndSem\SocketClass\chatClientCS202\obj\Debug\chatClientCS202.Form1.resources
+D:\2023Network\2ndSem\SocketClass\chatClientCS202\obj\Debug\chatClientCS202.Properties.Resources.resources
+D:\2023Network\2ndSem\SocketClass\chatClientCS202\obj\Debug\chatClientCS202.csproj.GenerateResource.cache
+D:\2023Network\2ndSem\SocketClass\chatClientCS202\obj\Debug\chatClientCS202.csproj.CoreCompileInputs.cache
+D:\2023Network\2ndSem\SocketClass\chatClientCS202\obj\Debug\chatClientCS202.exe
+D:\2023Network\2ndSem\SocketClass\chatClientCS202\obj\Debug\chatClientCS202.pdb

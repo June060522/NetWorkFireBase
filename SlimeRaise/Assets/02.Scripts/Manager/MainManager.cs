@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MainManager : Singleton<MainManager>
 {
@@ -14,6 +15,8 @@ public class MainManager : Singleton<MainManager>
 
     [SerializeField] private TextMeshProUGUI nickName;
     [SerializeField] private TMP_InputField Chat;
+    [SerializeField] private Button playBtn;
+    [SerializeField] private Button changePasswordBtn;
     string myID;
 
     public GameObject prefabUser; //Å¸ Å¬¶ó
@@ -32,6 +35,16 @@ public class MainManager : Singleton<MainManager>
 
     private void Update()
     {
+        if (nickName.text == "")
+        {
+            playBtn.interactable = false;
+            changePasswordBtn.interactable = false;
+        }
+        else
+        {
+            playBtn.interactable = true;
+            changePasswordBtn.interactable = true;
+        }
         ProcessQueue();
     }
 

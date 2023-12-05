@@ -41,6 +41,7 @@ public class AuthManager : MonoBehaviour
     public TMP_Text userNameText;
 
     private string eventText = "";
+    public string EventText => eventText;
 
     private string loadLastLogin = "";
     private string loadLastReward = "";

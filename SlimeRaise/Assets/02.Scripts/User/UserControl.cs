@@ -7,6 +7,7 @@ using UnityEngine.EventSystems;
 public class UserControl : MonoBehaviour
 {
     MainManager gm;
+    AuthManager auth;
     const float speed = 5.0f;
     const int MAX_HP = 100;
     const int DROP_HP = 1;
@@ -24,18 +25,25 @@ public class UserControl : MonoBehaviour
 
     bool bMoving;
 
-
     void Start()
     {
         gm = GameObject.Find("GameManager").GetComponent<MainManager>();
+        auth = GameObject.Find("AuthManager").GetComponent<AuthManager>();
         maxHP = MAX_HP;
         SetHP(MAX_HP);
 
         InvokeRepeating(nameof(DropSec), 1, 1);
     }
+
+    private void OnEnable()
+    {
+        transform.position = new Vector3(Random.Range(-100, 100), 33, Random.Range(-100, 100));
+    }
+
     void Update()
     {
-
+        if (transform.position.y < -10)
+            MainManager.Instance.OnLogOut();
         if (!isRemote)
         {
             targetPos.x = Input.GetAxisRaw("Horizontal");
@@ -58,7 +66,10 @@ public class UserControl : MonoBehaviour
             }
         }
         RotatePlayer();
-        transform.Translate(targetPos.normalized * speed * Time.deltaTime);
+        if(auth.EventText == "Speed")
+            transform.Translate(targetPos.normalized * speed * Time.deltaTime * 3);
+        else
+            transform.Translate(targetPos.normalized * speed * Time.deltaTime);
     }
 
 

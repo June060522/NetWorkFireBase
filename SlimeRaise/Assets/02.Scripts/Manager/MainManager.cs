@@ -124,10 +124,7 @@ public class MainManager : Singleton<MainManager>
                 Debug.Log("command = " + command + "id = " + id + "remain = " + remain + "next = " + nextCommand);
                 Debug.Log($"command={command} id={id} remain={remain} next={nextCommand}");
 
-                if (command == "Attack")
-                {
-                    TakeDamage(remain);
-                }
+
                 if (myID.CompareTo(id) != 0)
                 {
                     TextMessage(id, command);
@@ -141,9 +138,6 @@ public class MainManager : Singleton<MainManager>
                             break;
                         case "Left":
                             UserLeft(id);
-                            break;
-                        case "Heal":
-                            UserHeal(id);
                             break;
                     }
                 }
@@ -192,12 +186,6 @@ public class MainManager : Singleton<MainManager>
         }
         remoteUsers.Clear();
     }
-    public void OnRevive()
-    {
-        userControl.Revive();
-        string data = "#Heal#";
-        SendCommand(data);
-    }
     public void OnMessage()
     {
         if (myID != null)
@@ -229,15 +217,6 @@ public class MainManager : Singleton<MainManager>
         }
     }
 
-    public void UserHeal(string id)
-    {
-        if (remoteUsers.ContainsKey(id))
-        {
-            UserControl uc = remoteUsers[id];
-            uc.Revive();
-        }
-    }
-
     public void SetMove(string id, string cmdMove)
     {
         if (remoteUsers.ContainsKey(id))
@@ -246,31 +225,6 @@ public class MainManager : Singleton<MainManager>
             string[] strs = cmdMove.Split(CHAR_COMMA);
             Vector3 pos = new Vector3(float.Parse(strs[0]), float.Parse(strs[1]), 0);
             uc.targetPos = pos;
-        }
-    }
-
-    public void TakeDamage(string remain)
-    {
-        var strs = remain.Split(CHAR_COMMA);
-        Debug.Log(strs[0]);
-        for (int i = 0; i < strs.Length; i++)
-        {
-            if (remoteUsers.ContainsKey(strs[i]))
-            {
-                Debug.Log(strs[i]);
-                UserControl uc = remoteUsers[strs[i]];
-                if (uc != null)
-                {
-                    uc.DropHP(10);
-                }
-            }
-            else
-            {
-                if (myID.CompareTo(strs[i]) == 0)
-                {
-                    userControl.DropHP(10);
-                }
-            }
         }
     }
 

@@ -1,6 +1,7 @@
 using Firebase;
 using Firebase.Auth;
 using Firebase.Database;
+using Firebase.Extensions;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -9,6 +10,7 @@ using UnityEngine;
 using UnityEngine.SocialPlatforms.Impl;
 using UnityEngine.Tilemaps;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 using UserProfile = Firebase.Auth.UserProfile;
 
 public class AuthManager : MonoBehaviour
@@ -37,6 +39,10 @@ public class AuthManager : MonoBehaviour
     public GameObject dayRewardBtnParent;
     public TMP_Text attendance;
     private int repeat = 0;
+
+    [Header("Friend")]
+    public TMP_Text friendNameList;
+    public TMP_InputField friendName;
 
     public TMP_Text userNameText;
 
@@ -188,6 +194,7 @@ public class AuthManager : MonoBehaviour
             StartCoroutine(LoadUsername());
             StartCoroutine(LoadRepeat());
             StartCoroutine(LoadEvent());
+            StartCoroutine(ChangeEvent());
             FirebaseDatabase.DefaultInstance.GetReference("RewardLogin").ValueChanged += HandleTimeValueChanged;
         }
     }
@@ -422,5 +429,67 @@ public class AuthManager : MonoBehaviour
                 }
             }
         }
+    }
+
+    IEnumerator ChangeEvent()
+    {
+        string eventStr = "";
+        int num;
+        while (true)
+        {
+            num = Random.Range(0, 3);
+            switch (num)
+            {
+                case 0:
+                    eventStr = "Speed";
+                    break;
+                case 1:
+                    eventStr = "Jelly";
+                    break;
+                case 2:
+                    eventStr = "Jump";
+                    break;
+            }
+
+            var DBTask = dbref.Child("Ability").SetValueAsync(eventStr);
+            yield return new WaitUntil(() => DBTask.IsCompleted);
+            if (DBTask.Exception != null)
+            {
+                Debug.LogWarning($"Failed to Save task with {DBTask.Exception}");
+            }
+            else
+            {
+                Debug.Log("Date Saved");
+            }
+            yield return new WaitForSeconds(10f);
+        }
+    }
+
+    public void AddBtn()
+    {
+        StartCoroutine(AddFriend());
+    }
+
+    IEnumerator AddFriend()
+    {
+        var usersList = dbref.Child("users").GetValueAsync().ContinueWithOnMainThread(task =>
+        {
+            DataSnapshot snapshot = task.Result;
+            for(int i = 0; i < snapshot.ChildrenCount; i++)
+            {
+                snapshot
+            }
+        });
+        yield return null;
+        //var DBTask = dbref.Child("users").Child(user.UserId).Child("Friend1").SetValueAsync(friendName.text));
+        //yield return new WaitUntil(() => DBTask.IsCompleted);
+        //if (DBTask.Exception != null)
+        //{
+        //    Debug.LogWarning($"Failed to Save task with {DBTask.Exception}");
+        //}
+        //else
+        //{
+        //    Debug.Log("Date Saved");
+        //}
     }
 }

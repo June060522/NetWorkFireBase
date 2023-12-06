@@ -96,4 +96,10 @@ public class UIManager : Singleton<UIManager>
         m_dairyReward.SetActive(false);
         m_main.SetActive(true);
     }
+
+    public void Main()
+    {
+        m_playUI.SetActive(false);
+        m_main.SetActive(true);
+    }
 }

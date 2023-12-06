@@ -95,7 +95,7 @@ MeshCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 4
-  m_Convex: 1
+  m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300002, guid: 13ec5d0bbf56c734d9422c7089f60980, type: 3}
 --- !u!1 &1521080581243988
@@ -109,7 +109,6 @@ GameObject:
   - component: {fileID: 4437697752949200}
   - component: {fileID: 33075627182766610}
   - component: {fileID: 23888532610889902}
-  - component: {fileID: 36737715140810502}
   - component: {fileID: 7321697139150757110}
   m_Layer: 0
   m_Name: EA03_Nature_Tree_01b_LOD2
@@ -183,20 +182,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!136 &36737715140810502
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1521080581243988}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.15
-  m_Height: 4.1
-  m_Direction: 1
-  m_Center: {x: 0.18, y: 2.07, z: 0.1}
 --- !u!64 &7321697139150757110
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -208,7 +193,7 @@ MeshCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 4
-  m_Convex: 1
+  m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300000, guid: 13ec5d0bbf56c734d9422c7089f60980, type: 3}
 --- !u!1 &1949544007611810
@@ -306,7 +291,7 @@ MeshCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 4
-  m_Convex: 1
+  m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300004, guid: 13ec5d0bbf56c734d9422c7089f60980, type: 3}
 --- !u!1 &1955220120978140

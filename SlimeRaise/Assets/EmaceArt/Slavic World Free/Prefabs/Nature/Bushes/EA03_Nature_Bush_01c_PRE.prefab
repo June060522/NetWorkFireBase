@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 955035286167411462}
   - component: {fileID: 8373957460171059373}
   - component: {fileID: 4804409344522406225}
+  - component: {fileID: 1023527426421838296}
   m_Layer: 0
   m_Name: EA03_Nature_Bush_01c_LOD2
   m_TagString: Untagged
@@ -28,6 +29,7 @@ Transform:
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -0, y: 0, z: 0}
   m_LocalScale: {x: 1.2326373, y: 1.4069531, z: 1.2326373}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6943400203910789608}
   m_RootOrder: 2
@@ -51,10 +53,12 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -79,6 +83,21 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &1023527426421838296
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 135468216704564074}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4338033055493144899, guid: e360f9142d27d0445abc192c6bc54b9b, type: 3}
 --- !u!1 &1498253252732139221
 GameObject:
   m_ObjectHideFlags: 0
@@ -90,6 +109,7 @@ GameObject:
   - component: {fileID: 7158776402598153014}
   - component: {fileID: 5334612081971888914}
   - component: {fileID: 7249714261083351863}
+  - component: {fileID: 3963011668217678437}
   m_Layer: 0
   m_Name: EA03_Nature_Bush_01c_LOD1
   m_TagString: Untagged
@@ -107,6 +127,7 @@ Transform:
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -0, y: 0, z: 0}
   m_LocalScale: {x: 1.2326373, y: 1.4069531, z: 1.2326373}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6943400203910789608}
   m_RootOrder: 1
@@ -130,10 +151,12 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -158,6 +181,21 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &3963011668217678437
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1498253252732139221}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 2451534088354612553, guid: e360f9142d27d0445abc192c6bc54b9b, type: 3}
 --- !u!1 &2802073118818634093
 GameObject:
   m_ObjectHideFlags: 0
@@ -169,6 +207,7 @@ GameObject:
   - component: {fileID: 7114422446247723107}
   - component: {fileID: 4243944011026037415}
   - component: {fileID: 5842376909600829150}
+  - component: {fileID: 3807749255155684670}
   m_Layer: 0
   m_Name: EA03_Nature_Bush_01c_LOD0
   m_TagString: Untagged
@@ -186,6 +225,7 @@ Transform:
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -0, y: 0, z: 0}
   m_LocalScale: {x: 1.2326373, y: 1.4069531, z: 1.2326373}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6943400203910789608}
   m_RootOrder: 0
@@ -209,10 +249,12 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -237,6 +279,21 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &3807749255155684670
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2802073118818634093}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 6369126111164300066, guid: e360f9142d27d0445abc192c6bc54b9b, type: 3}
 --- !u!1 &4145606235240372912
 GameObject:
   m_ObjectHideFlags: 0
@@ -249,6 +306,7 @@ GameObject:
   - component: {fileID: 8408244810997468058}
   - component: {fileID: 5091337410787105662}
   - component: {fileID: 943989628}
+  - component: {fileID: 3466834828415130476}
   m_Layer: 0
   m_Name: EA03_Nature_Bush_01c_LOD3
   m_TagString: Untagged
@@ -266,6 +324,7 @@ Transform:
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -0, y: 0, z: 0}
   m_LocalScale: {x: 1.2326373, y: 1.4069531, z: 1.2326373}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6943400203910789608}
   m_RootOrder: 3
@@ -289,10 +348,12 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -317,6 +378,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!64 &943989628
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -328,7 +390,21 @@ MeshCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 4
-  m_Convex: 1
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -715723111855635086, guid: e360f9142d27d0445abc192c6bc54b9b, type: 3}
+--- !u!64 &3466834828415130476
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4145606235240372912}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -715723111855635086, guid: e360f9142d27d0445abc192c6bc54b9b, type: 3}
 --- !u!1 &7714728962794611538
@@ -358,6 +434,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7114422446247723107}
   - {fileID: 7158776402598153014}

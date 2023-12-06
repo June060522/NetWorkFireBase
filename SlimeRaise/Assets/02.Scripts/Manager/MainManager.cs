@@ -184,7 +184,7 @@ public class MainManager : Singleton<MainManager>
     {
         cameramain.SetActive(true);
         User.SetActive(false);
-        //
+        UIManager.Instance.Main();
         SocketModule.Instance.Logout();
         foreach (var user in remoteUsers)
         {

@@ -43,6 +43,7 @@ public class AuthManager : MonoBehaviour
     [Header("Friend")]
     public TMP_Text friendNameList;
     public TMP_InputField friendName;
+    public TMP_Text friendMax;
 
     public TMP_Text userNameText;
 
@@ -51,6 +52,8 @@ public class AuthManager : MonoBehaviour
 
     private string loadLastLogin = "";
     private string loadLastReward = "";
+    bool addFriendComplete = true;
+    bool canAddFriend = true;
     private void Awake()
     {
         Firebase.FirebaseApp.CheckAndFixDependenciesAsync().ContinueWith(task =>
@@ -194,6 +197,7 @@ public class AuthManager : MonoBehaviour
             StartCoroutine(LoadUsername());
             StartCoroutine(LoadRepeat());
             StartCoroutine(LoadEvent());
+            StartCoroutine(LoadFriend());
             StartCoroutine(ChangeEvent());
             FirebaseDatabase.DefaultInstance.GetReference("RewardLogin").ValueChanged += HandleTimeValueChanged;
         }
@@ -368,6 +372,7 @@ public class AuthManager : MonoBehaviour
     }
 
     public void ClickReward(Button _btn) => StartCoroutine(SaveRewardLogin(_btn));
+
     private IEnumerator SaveRewardLogin(Button _btn)
     {
         repeat++;
@@ -467,29 +472,114 @@ public class AuthManager : MonoBehaviour
 
     public void AddBtn()
     {
-        StartCoroutine(AddFriend());
+        StartCoroutine(CheckFriend());
+    }
+
+    IEnumerator CheckFriend()
+    {
+        bool isLoad = false;
+        bool canAdd = false;
+        var usersList = dbref.Child("users");
+        usersList.GetValueAsync().ContinueWith(task =>
+        {
+            if (task.IsFaulted)
+            {
+                Debug.LogWarning("Failed Load Data");
+            }
+            else if (task.IsCompleted)
+            {
+                DataSnapshot snapshot = task.Result;
+                foreach(var data in snapshot.Children)
+                {
+                    var info = data.Child("UserName");
+
+                    string s = $"{info.Value}";
+                    if(s == friendName.text)
+                    {
+                        if($"{dbref.Child("users").Child(user.UserId).Child("UserName").GetValueAsync().Result.Value}" != s)
+                            canAdd = true;
+                    }
+                }
+            }
+                isLoad = true;
+        });
+        yield return new WaitUntil(() => isLoad);
+        isLoad = false;
+        if(canAdd)
+        {
+            addFriendComplete = false;
+            StartCoroutine(AddFriend());
+        }
     }
 
     IEnumerator AddFriend()
     {
-        var usersList = dbref.Child("users").GetValueAsync().ContinueWithOnMainThread(task =>
+        canAddFriend = false;
+        for (int i = 1; i <= 8; i++)
         {
-            DataSnapshot snapshot = task.Result;
-            for(int i = 0; i < snapshot.ChildrenCount; i++)
+            if (addFriendComplete)
+                break;
+            yield return CanAddFriend(i);
+            if (addFriendComplete)
+                break;
+            if (!canAddFriend)
+                continue;
+            var DBTask = dbref.Child("users").Child(user.UserId).Child($"Friend{i}").SetValueAsync(friendName.text);
+            yield return new WaitUntil(() => DBTask.IsCompleted);
+            if (DBTask.Exception != null)
             {
-                snapshot
+                Debug.LogWarning($"Failed to Save task with {DBTask.Exception}");
             }
-        });
-        yield return null;
-        //var DBTask = dbref.Child("users").Child(user.UserId).Child("Friend1").SetValueAsync(friendName.text));
-        //yield return new WaitUntil(() => DBTask.IsCompleted);
-        //if (DBTask.Exception != null)
-        //{
-        //    Debug.LogWarning($"Failed to Save task with {DBTask.Exception}");
-        //}
-        //else
-        //{
-        //    Debug.Log("Date Saved");
-        //}
+            else
+            {
+                Debug.Log("Friend Saved");
+                friendNameList.text += $"{i}. {friendName.text}\n";
+                addFriendComplete = true;
+            }
+        }
+        if(!addFriendComplete)
+        {
+            friendMax.gameObject.SetActive(true);
+            addFriendComplete = true;
+        }
+    }
+
+    IEnumerator CanAddFriend(int num)
+    {
+        var DBTask = dbref.Child("users").Child(user.UserId).Child($"Friend{num}").GetValueAsync();
+        yield return new WaitUntil(() => DBTask.IsCompleted);
+        if (DBTask.Exception != null)
+        {
+            Debug.LogWarning($"Failed to Save task with {DBTask.Exception}");
+        }
+        else
+        {
+            if($"{DBTask.Result.Value}" == friendName.text)
+                addFriendComplete = true;
+
+            if ($"{DBTask.Result.Value}" == "")
+                canAddFriend = true;
+        }
+    }
+
+    IEnumerator LoadFriend()
+    {
+        for (int i = 1; i <= 8; i++)
+        {
+            var DBTask = dbref.Child("users").Child(user.UserId).Child($"Friend{i}").GetValueAsync();
+            yield return new WaitUntil(() => DBTask.IsCompleted);
+            if (DBTask.Exception != null)
+            {
+                Debug.LogWarning($"Failed to Save task with {DBTask.Exception}");
+            }
+            else
+            {
+                if ($"{DBTask.Result.Value}" != "")
+                {
+                    Debug.Log("Friend Load");
+                    friendNameList.text += $"{i}. {DBTask.Result.Value}\n";
+                }
+            }
+        }
     }
 }

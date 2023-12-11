@@ -12,6 +12,7 @@ public class UIManager : Singleton<UIManager>
     public GameObject m_main;
     public GameObject m_passwordChange;
     public GameObject m_dairyReward;
+    public GameObject m_maxFirend;
 
     public void OptionBtn()
     {
@@ -35,6 +36,7 @@ public class UIManager : Singleton<UIManager>
     {
         m_friendUI.SetActive(false);
         m_main.SetActive(true);
+        m_maxFirend.SetActive(false);
     }
 
     public void GameStart()
